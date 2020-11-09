@@ -1,7 +1,7 @@
 {
-  "name": "@chris.troutner/npm-lib-boilerplate",
+  "name": "psf-metrics",
   "version": "1.0.0",
-  "description": "A boilerplate for creating an npm library with Semantic Release, linting, and tests.",
+  "description": "Metrics for the PSF organization, written to the BCH blockchain once per day. ",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -28,12 +28,12 @@
   "author": "Chris Troutner <chris.troutner@gmail.com>",
   "license": "MIT",
   "apidoc": {
-    "title": "npm-lib-boilerplate",
+    "title": "psf-metrics",
     "url": "localhost:5000"
   },
-  "repository": "christroutner/npm-lib-boilerplate",
+  "repository": "Permissionless-Software-Foundation/psf-metrics",
   "dependencies": {
-    "@psf/bch-js": "^3.5.3",
+    "@psf/bch-js": "^3.8.10",
     "apidoc": "^0.23.0"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "publish": [
       {
         "path": "@semantic-release/npm",
-        "npmPublish": true
+        "npmPublish": false
       }
     ]
   }
