@@ -14,7 +14,7 @@ const mockData = require('./mocks/util-mocks')
 
 // Unit under test
 const UtilLib = require('../../lib/util')
-const uut = new UtilLibDuplicate()
+const uut = new UtilLib()
 
 describe('#util.js', () => {
   let sandbox
