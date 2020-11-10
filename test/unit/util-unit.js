@@ -13,7 +13,7 @@ const assert = chai.assert
 const mockData = require('./mocks/util-mocks')
 
 // Unit under test
-const UtilLibDuplicate = require('../../lib/util')
+const UtilLib = require('../../lib/util')
 const uut = new UtilLibDuplicate()
 
 describe('#util.js', () => {
