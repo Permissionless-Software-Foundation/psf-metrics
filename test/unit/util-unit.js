@@ -13,8 +13,8 @@ const assert = chai.assert
 const mockData = require('./mocks/util-mocks')
 
 // Unit under test
-const UtilLib = require('../../lib/util')
-const uut = new UtilLib(true)
+const UtilLibDuplicate = require('../../lib/util')
+const uut = new UtilLibDuplicate()
 
 describe('#util.js', () => {
   let sandbox
@@ -56,51 +56,6 @@ describe('#util.js', () => {
       assert.property(bchData.utxos[0], 'txid')
       assert.property(bchData.utxos[0], 'vout')
       assert.property(bchData.utxos[0], 'satoshis')
-    })
-  })
-
-  describe('#getUTXOsByAddress', () => {
-    it('should get UTXOs on an address', async () => {
-      sandbox
-        .stub(uut.bchjs.Electrumx, 'utxo')
-        .resolves(mockData.electrumUTXOs)
-      const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
-
-      const utxos = await uut.getUTXOsByAddress(addr)
-
-      // Assert essential UTXOs properties exist.
-      assert.isArray(utxos.utxos)
-      assert.property(utxos.utxos[0], 'txid')
-      assert.property(utxos.utxos[1], 'vout')
-      assert.property(utxos.utxos[2], 'satoshis')
-    })
-  })
-
-  describe('#getBCHBalance', () => {
-    it('should get BCH balance on an address', async () => {
-      sandbox
-        .stub(uut.bchjs.Electrumx, 'balance')
-        .resolves(mockData.electrumBalance)
-      const addr = 'irrelevantForTheMock'
-
-      const balance = await uut.getBCHBalance(addr, true)
-
-      assert.equal(balance, 1)
-    })
-  })
-
-  describe('#findBiggestUtxo', () => {
-    it('should get biggest UTXO on an address', async () => {
-      sandbox
-        .stub(uut.bchjs.Blockchain, 'getTxOut')
-        .resolves(mockData.electrumUTXOs)
-
-      const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
-
-      const utxo = await uut.findBiggestUtxo(mockData.electrumUTXOs.utxos, true)
-
-      // 2b37bdb3b63dd0bca720437754a36671431a950e684b64c44ea910ea9d5297c7 is the biggest of the three mocked UTXOs
-      assert.equal(utxo.txid, '2b37bdb3b63dd0bca720437754a36671431a950e684b64c44ea910ea9d5297c7')
     })
   })
 })
