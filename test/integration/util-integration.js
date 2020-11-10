@@ -30,4 +30,17 @@ describe('#util.js', () => {
       assert.property(bchData.utxos[0], 'satoshis')
     })
   })
+  describe('#getBCHBalance', () => {
+    it('should get BCH balance on an address', async () => {
+      const addr = 'bitcoincash:qp3sn6vlwz28ntmf3wmyra7jqttfx7z6zgtkygjhc7'
+
+      const utxos = await uut.getUTXOsByAddress(addr)
+
+      // Assert essential UTXOs properties exist.
+      assert.isArray(utxos)
+      assert.property(utxos[0], 'txid')
+      assert.property(utxos[0], 'vout')
+      assert.property(utxos[0], 'satoshis')
+    })
+  })
 })
