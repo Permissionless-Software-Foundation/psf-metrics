@@ -15,8 +15,8 @@ const mockData = require('./mocks/bfp-mocks')
 
 // Unit under test
 const BFP = require('../../lib/bfp')
-
 const bfp = new BFP()
+const Bfp = require('bitcoinfiles-node').bfp
 
 describe('#bfp.js', () => {
   let sandbox
@@ -25,34 +25,6 @@ describe('#bfp.js', () => {
   beforeEach(() => (sandbox = sinon.createSandbox()))
   afterEach(() => sandbox.restore())
 
-  describe('#writeBfp', () => {
-    it('should write a file to the blockchain', async () => {
-      /*sandbox
-        .stub(uut.bchjs.Electrumx, 'balance')
-        .resolves(mockData.electrumBalance)
-
-      sandbox
-        .stub(uut.bchjs.Crypto, 'sha256')
-        .resolves("n16vM3Ndnpp43GzDnxhHgshMCXspkvsJoq")
-
-      sandbox
-        .stub(Bfp, 'calculateFileUploadCost')
-        .resolves(1042)
-
-      sandbox
-        .stub(uut.bchjs.Electrumx, 'utxo')
-        .resolves(mockData.electrumUTXOs)*/
-
-      /*
-            sandbox  //TODO I WANT TO STUB THE CALL IN _uploadToBlockchain but getting: TypeError: Cannot stub non-existent property uploadFile
-              .stub(bfp, 'uploadFile')
-              .resolves('fileId8739873984')*/
-
-
-      assert.isNotEmpty(await bfp.writeBFP())
-      done()
-    })
-  })
 
   describe('#getUTXOsByAddress', () => {
     it('should get UTXOs on an address', async () => {
@@ -74,6 +46,15 @@ describe('#bfp.js', () => {
   })
 
   describe('#getBCHBalance', () => {
+    it('should throw an error as address is invalid', async () => {
+      const addr = 'asdf'
+      try {
+        await bfp.getBCHBalance(addr, true)
+        assert.fail()
+      } catch (e) {
+        assert.equal(e.error, 'Unsupported address format : asdf')
+      }
+    })
     it('should get BCH balance on an address', async () => {
       sandbox
         .stub(bfp.bchjs.Electrumx, 'balance')
@@ -84,8 +65,73 @@ describe('#bfp.js', () => {
 
       const balance = await bfp.getBCHBalance(addr, true)
 
-      assert.equal(balance, 0.01)
+      assert.equal(balance, 1)
       //assert.equal(balance, 0.00001) MAINNET
+    })
+  })
+
+  describe('#_throwErrorIfBalanceIsInSufficient', () => {
+    it('should throw an error as balance is insufficient', async () => {
+      try {
+        await bfp._throwErrorIfBalanceIsInSufficient(1, 2);
+        assert.fail()
+      } catch (e) {
+        assert.equal(e, 'Error: Not enough satoshis in the largest utxo(1) to pay the BFP fees of 2')
+      }
+    })
+  })
+
+  describe('#getUTXOsByAddress', () => {
+    it('should throw an error as address is invalid', async () => {
+      sandbox
+        .stub(bfp.bchjs.Electrumx, 'utxo')
+        .resolves({
+          'utxos': []
+        })
+      try {
+        await bfp.getUTXOsByAddress('');
+        assert.fail()
+      } catch (e) {
+        assert.equal(e, 'Error: No UTXOs found.')
+      }
+    })
+  })
+
+  describe('#writeBfp', () => {
+    it('should write a file to the blockchain', async () => {
+      sandbox
+        .stub(bfp.bchjs.Electrumx, 'balance')
+        .resolves(mockData.electrumBalance)
+
+      sandbox
+        .stub(bfp.bchjs.Crypto, 'sha256')
+        .resolves("n16vM3Ndnpp43GzDnxhHgshMCXspkvsJoq")
+
+      sandbox
+        .stub(Bfp, 'calculateFileUploadCost') //this is a static function
+        .resolves(1042)
+
+      sandbox
+        .stub(bfp.bchjs.Electrumx, 'utxo')
+        .resolves(mockData.electrumUTXOs)
+
+
+      sandbox
+        .stub(bfp.bfp, 'uploadFile')
+        .resolves('fileId8739873984')
+
+
+      assert.isNotEmpty(await bfp.writeBFP())
+    })
+    it('should kill process as balance is 0.0', async () => {
+      /*sandbox
+        .stub(bfp, 'getBCHBalance')
+        .resolves(0.0)
+
+      await bfp.writeBFP()
+      done()*/
+      //TODO HOW CAN I TEST THE PROCESS EXIT without interrupting the test process?
+      assert.fail()
     })
   })
 })
