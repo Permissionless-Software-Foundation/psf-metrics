@@ -73,7 +73,7 @@ describe('#bfp.js', () => {
   describe('#_throwErrorIfBalanceIsInSufficient', () => {
     it('should throw an error as balance is insufficient', async () => {
       try {
-        await bfp._throwErrorIfBalanceIsInSufficient(1, 2);
+        await bfp._throwErrorIfBalanceIsInSufficient(1, 2)
         assert.fail()
       } catch (e) {
         assert.equal(e, 'Error: Not enough satoshis in the largest utxo(1) to pay the BFP fees of 2')
@@ -89,7 +89,7 @@ describe('#bfp.js', () => {
           'utxos': []
         })
       try {
-        await bfp.getUTXOsByAddress('');
+        await bfp.getUTXOsByAddress('')
         assert.fail()
       } catch (e) {
         assert.equal(e, 'Error: No UTXOs found.')
@@ -97,7 +97,30 @@ describe('#bfp.js', () => {
     })
   })
 
+  describe('#checkBalanceKillProcessIfZero', () => {
+    it('should kill process as balance is 0.0', async () => {
+      try {
+        await bfp.checkBalanceKillProcessIfZero(0.0)
+        assert.fail()
+      } catch (e) {
+        assert.equal(e, 'Error: Balance of sending address is zero.')
+      }
+    })
+  })
+
   describe('#writeBfp', () => {
+    it('should throw error as addr is invalid', async () => {
+      try {
+        let error = new Error("some fake error");
+        sandbox.stub(bfp, "getBCHBalance").throws(error);
+        await bfp.writeBFP(true)
+        assert.fail()
+      } catch (e) {
+        assert.notEqual(e.message, 'assert.fail()')
+        assert.notEqual(e, 'TypeError: Cannot stub non-existent property SEND_ADDR')
+        assert.equal(e, 'Error: some fake error')
+      }
+    })
     it('should write a file to the blockchain', async () => {
       sandbox
         .stub(bfp.bchjs.Electrumx, 'balance')
@@ -122,16 +145,6 @@ describe('#bfp.js', () => {
 
 
       assert.isNotEmpty(await bfp.writeBFP())
-    })
-    it('should kill process as balance is 0.0', async () => {
-      /*sandbox
-        .stub(bfp, 'getBCHBalance')
-        .resolves(0.0)
-
-      await bfp.writeBFP()
-      done()*/
-      //TODO HOW CAN I TEST THE PROCESS EXIT without interrupting the test process?
-      assert.fail()
     })
   })
 })
