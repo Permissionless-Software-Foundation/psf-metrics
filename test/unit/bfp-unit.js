@@ -97,6 +97,18 @@ describe('#bfp.js', () => {
     })
   })
 
+  describe('#initWallet', () => {
+    it('should throw an error as wallet not found', async () => {
+      try {
+        sandbox.stub(bfp, "openWallet").throws(new Error())
+        bfp.initWallet()
+      } catch (e) {
+        assert.equal(e.message, 'Could not open wallet.json. Generate a wallet with create-wallet first.')
+      }
+    })
+  })
+
+
   describe('#checkBalanceKillProcessIfZero', () => {
     it('should kill process as balance is 0.0', async () => {
       try {
@@ -111,8 +123,8 @@ describe('#bfp.js', () => {
   describe('#writeBfp', () => {
     it('should throw error as addr is invalid', async () => {
       try {
-        let error = new Error("some fake error");
-        sandbox.stub(bfp, "getBCHBalance").throws(error);
+        let error = new Error("some fake error")
+        sandbox.stub(bfp, "getBCHBalance").throws(error)
         await bfp.writeBFP(true)
         assert.fail()
       } catch (e) {
