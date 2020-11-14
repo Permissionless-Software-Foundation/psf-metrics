@@ -18,11 +18,10 @@ const bfp = new BFP()
 describe('#bfp.js', () => {
   describe('#getUTXOsByAddress', () => {
     it('should get UTXOs on an address', async () => {
-      const addr = 'bchtest:qrtddel54p4zxmrkf7jyex7j06lhx48k3s5wqpgu5p'
-      // const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
+      const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
 
       const utxos = await bfp.getUTXOsByAddress(addr)
-      console.log(utxos)
+      // console.log(utxos)
 
       // Assert essential UTXOs properties exist.
       assert.isArray(utxos.utxos)
@@ -34,19 +33,21 @@ describe('#bfp.js', () => {
 
   describe('#getBCHBalance', () => {
     it('should get BCH balance on an address', async () => {
-      const addr = 'bchtest:qrtddel54p4zxmrkf7jyex7j06lhx48k3s5wqpgu5p'
-      // const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
+      const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
 
       const balance = await bfp.getBCHBalance(addr, true)
+      console.log(`balance: ${balance}`)
 
-      assert.equal(balance, 0.01)
-      // assert.equal(balance, 0.00001) MAINNET
+      assert.isNumber(balance)
     })
   })
 
   describe('#writeBfp', () => {
     it('should write a file to the blockchain', async () => {
-      assert.isNotEmpty(await bfp.writeBFP())
+      const txid = await bfp.writeBFP()
+      console.log(`txid: ${txid}`)
+
+      assert.isString(txid)
     })
   })
 })
