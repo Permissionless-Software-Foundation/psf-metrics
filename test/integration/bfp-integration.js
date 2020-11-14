@@ -4,7 +4,7 @@
 
 // npm libraries
 const chai = require('chai')
-const sinon = require('sinon')
+// const sinon = require('sinon')
 // const Bfp = require('bitcoinfiles-node').bfp
 
 // Locally global variables.
@@ -13,7 +13,7 @@ const assert = chai.assert
 // Unit under test
 const BFP = require('../../lib/bfp')
 const bfp = new BFP()
-const Bfp = require('bitcoinfiles-node').bfp
+// const Bfp = require('bitcoinfiles-node').bfp
 
 describe('#bfp.js', () => {
   describe('#getUTXOsByAddress', () => {
