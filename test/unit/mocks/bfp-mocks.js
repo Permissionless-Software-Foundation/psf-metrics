@@ -9,23 +9,23 @@
 const electrumUTXOs = {
   success: true,
   utxos: [{
-      height: 602405,
-      tx_hash: 'lkhgfidsghds7hz98w4hz98fusdsfdsfdshduifhudsfhdsfhoFAKEHASH',
-      tx_pos: 0,
-      value: 1000
-    },
-    {
-      height: 602405,
-      tx_hash: '2b37bdb3b63dd0bca720437754a36671431a950e684b64c44ea910ea9d5297c7',
-      tx_pos: 1,
-      value: 2000
-    },
-    {
-      height: 602405,
-      tx_hash: 'lkhgfidsghds7hz98w4hz98fushduifhudsfhdsfhoFAKEHASH',
-      tx_pos: 2,
-      value: 3000
-    }
+    height: 602405,
+    tx_hash: 'lkhgfidsghds7hz98w4hz98fusdsfdsfdshduifhudsfhdsfhoFAKEHASH',
+    tx_pos: 0,
+    value: 1000
+  },
+  {
+    height: 602405,
+    tx_hash: '2b37bdb3b63dd0bca720437754a36671431a950e684b64c44ea910ea9d5297c7',
+    tx_pos: 1,
+    value: 2000
+  },
+  {
+    height: 602405,
+    tx_hash: 'lkhgfidsghds7hz98w4hz98fushduifhudsfhdsfhoFAKEHASH',
+    tx_pos: 2,
+    value: 3000
+  }
   ]
 }
 
@@ -65,10 +65,10 @@ const electrumUTXOs = {
 } */
 
 const electrumBalance = {
-  "success": true,
-  "balance": {
-    "confirmed": 90000000,
-    "unconfirmed": 10000000
+  success: true,
+  balance: {
+    confirmed: 90000000,
+    unconfirmed: 10000000
   }
 }
 

@@ -5,7 +5,7 @@
 // npm libraries
 const chai = require('chai')
 const sinon = require('sinon')
-//const Bfp = require('bitcoinfiles-node').bfp
+// const Bfp = require('bitcoinfiles-node').bfp
 
 // Locally global variables.
 const assert = chai.assert
@@ -19,7 +19,7 @@ describe('#bfp.js', () => {
   describe('#getUTXOsByAddress', () => {
     it('should get UTXOs on an address', async () => {
       const addr = 'bchtest:qrtddel54p4zxmrkf7jyex7j06lhx48k3s5wqpgu5p'
-      //const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
+      // const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
 
       const utxos = await bfp.getUTXOsByAddress(addr)
       console.log(utxos)
@@ -35,12 +35,12 @@ describe('#bfp.js', () => {
   describe('#getBCHBalance', () => {
     it('should get BCH balance on an address', async () => {
       const addr = 'bchtest:qrtddel54p4zxmrkf7jyex7j06lhx48k3s5wqpgu5p'
-      //const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
+      // const addr = 'bitcoincash:qqh793x9au6ehvh7r2zflzguanlme760wuzehgzjh9'
 
       const balance = await bfp.getBCHBalance(addr, true)
 
       assert.equal(balance, 0.01)
-      //assert.equal(balance, 0.00001) MAINNET
+      // assert.equal(balance, 0.00001) MAINNET
     })
   })
 
