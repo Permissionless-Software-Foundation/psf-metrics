@@ -10,9 +10,11 @@ const chai = require('chai')
 // Locally global variables.
 const assert = chai.assert
 
+const mockWallet = require('../unit/mocks/wallet.json')
+
 // Unit under test
 const BFP = require('../../lib/bfp')
-const bfp = new BFP()
+const bfp = new BFP({ walletInfo: mockWallet })
 // const Bfp = require('bitcoinfiles-node').bfp
 
 describe('#bfp.js', () => {

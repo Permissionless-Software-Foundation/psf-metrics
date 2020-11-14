@@ -12,6 +12,7 @@ const assert = chai.assert
 
 // Mocking data libraries.
 const mockData = require('./mocks/bfp-mocks')
+const mockWallet = require('./mocks/wallet.json')
 
 // Unit under test
 const BFP = require('../../lib/bfp')
@@ -26,10 +27,23 @@ describe('#bfp.js', () => {
   beforeEach(() => {
     sandbox = sinon.createSandbox()
 
-    uut = new BFP()
+    uut = new BFP({ walletInfo: mockWallet })
   })
 
   afterEach(() => sandbox.restore())
+
+  describe('#constructor', () => {
+    it('should throw an error if wallet data is not passed in.', () => {
+      try {
+        const temp = new BFP()
+
+        assert.fail('Unexpected result')
+        console.log(temp)
+      } catch (err) {
+        assert.include(err.message, 'Must pass wallet data on initialization')
+      }
+    })
+  })
 
   describe('#getUTXOsByAddress', () => {
     it('should get UTXOs on an address', async () => {
@@ -106,22 +120,6 @@ describe('#bfp.js', () => {
         assert.fail()
       } catch (err) {
         assert.include(err.message, 'No UTXOs found.')
-      }
-    })
-  })
-
-  describe('#initWallet', () => {
-    it('should throw an error if wallet file is not found', async () => {
-      try {
-        // Force an error.
-        sandbox.stub(uut, 'openWallet').throws(new Error())
-
-        uut.initWallet()
-      } catch (err) {
-        assert.include(
-          err.message,
-          'Could not open wallet.json. Add a mainnet wallet.json file.'
-        )
       }
     })
   })
