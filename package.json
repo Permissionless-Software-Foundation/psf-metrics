@@ -33,7 +33,7 @@
   },
   "repository": "Permissionless-Software-Foundation/psf-metrics",
   "dependencies": {
-    "@psf/bch-js": "^3.8.10",
+    "@psf/bch-js": "^3.10.1",
     "apidoc": "^0.23.0",
     "bch-util": "^1.2.2",
     "bitcoinfiles-node": "^0.5.4"
