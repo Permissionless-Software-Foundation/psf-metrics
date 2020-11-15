@@ -19,6 +19,7 @@ const BFP = require('../../lib/bfp')
 let uut
 
 const Bfp = require('bitcoinfiles-node').bfp
+let config
 
 describe('#bfp.js', () => {
   let sandbox
@@ -26,21 +27,85 @@ describe('#bfp.js', () => {
   // Restore the sandbox before each test.
   beforeEach(() => {
     sandbox = sinon.createSandbox()
-
-    uut = new BFP({ walletInfo: mockWallet })
+    config = {
+      wif: 'Ky4nfbTgCQ79Gbx4gRSqSQdtEeqgZBVL3qBuF4nDn2hrr236T2DG',
+      fileExt: '.ext',
+      fileName: 'filename',
+      data: '{bla:blub}'
+    }
+    uut = new BFP(config)
   })
 
   afterEach(() => sandbox.restore())
-
+  describe('#throwErrorOnInvalidConfigParameters', () => {
+    it('should throw an error if config is not set', () => {
+      try {
+        const temp = new BFP()
+        assert.fail('Unexpected result')
+        console.log(temp)
+      } catch (err) {
+        assert.include(err.message, 'Must pass config to constructor')
+      }
+    })
+    it('should throw an error if config.wif is not set', () => {
+      try {
+        config.wif = ''
+        const temp = new BFP(config)
+        assert.fail('Unexpected result')
+        console.log(temp)
+      } catch (err) {
+        assert.include(err.message, 'Must pass config.wif to constructor')
+      }
+    })
+    it('should throw an error if config.fileName is not set', () => {
+      try {
+        config.fileName = ''
+        const temp = new BFP(config)
+        assert.fail('Unexpected result')
+        console.log(temp)
+      } catch (err) {
+        assert.include(err.message, 'Must pass config.fileName to constructor')
+      }
+    })
+    it('should throw an error if config.fileExt is not set', () => {
+      try {
+        config.fileExt = ''
+        const temp = new BFP(config)
+        assert.fail('Unexpected result')
+        console.log(temp)
+      } catch (err) {
+        assert.include(err.message, 'Must pass config.fileExt to constructor')
+      }
+    })
+    it('should throw an error if config.data is not set', () => {
+      try {
+        config.data = ''
+        const temp = new BFP(config)
+        assert.fail('Unexpected result')
+        console.log(temp)
+      } catch (err) {
+        assert.include(err.message, 'Must pass config.data to constructor')
+      }
+    })
+    it('should throw an error if config.wif is wrong format', () => {
+      try {
+        config.wif = 'sfdhu'
+        const temp = new BFP(config)
+        assert.fail('Unexpected result')
+        console.log(temp)
+      } catch (err) {
+        assert.include(err.message, 'config.wif format is incorrect')
+      }
+    })
+  })
   describe('#constructor', () => {
     it('should throw an error if wallet data is not passed in.', () => {
       try {
         const temp = new BFP()
-
         assert.fail('Unexpected result')
         console.log(temp)
       } catch (err) {
-        assert.include(err.message, 'Must pass wallet data on initialization')
+        assert.include(err.message, 'Must pass config to constructor')
       }
     })
   })
