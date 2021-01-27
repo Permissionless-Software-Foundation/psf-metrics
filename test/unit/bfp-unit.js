@@ -12,7 +12,7 @@ const assert = chai.assert
 
 // Mocking data libraries.
 const mockData = require('./mocks/bfp-mocks')
-const mockWallet = require('./mocks/wallet.json')
+// const mockWallet = require('./mocks/wallet.json')
 
 // Unit under test
 const BFP = require('../../lib/bfp')

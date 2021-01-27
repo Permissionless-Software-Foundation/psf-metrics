@@ -10,7 +10,7 @@ const sinon = require('sinon')
 const assert = chai.assert
 
 // Mocking data libraries.
-const mockData = require('./mocks/util-mocks')
+// const mockData = require('./mocks/util-mocks')
 
 // Unit under test
 const UtilLib = require('../../lib/util')
@@ -36,26 +36,26 @@ describe('#util.js', () => {
       }
     })
 
-    it('should get BCH data on an address', async () => {
-      // Mock external dependencies.
-      sandbox
-        .stub(uut.bchjs.Blockbook, 'balance')
-        .resolves(mockData.mockBalance)
-      sandbox.stub(uut.bchjs.Blockbook, 'utxo').resolves(mockData.mockUtxos)
-
-      const addr = 'bitcoincash:qp3sn6vlwz28ntmf3wmyra7jqttfx7z6zgtkygjhc7'
-
-      const bchData = await uut.getBchData(addr)
-
-      // Assert that top-level properties exist.
-      assert.property(bchData, 'balance')
-      assert.property(bchData, 'utxos')
-
-      // Assert essential UTXOs properties exist.
-      assert.isArray(bchData.utxos)
-      assert.property(bchData.utxos[0], 'txid')
-      assert.property(bchData.utxos[0], 'vout')
-      assert.property(bchData.utxos[0], 'satoshis')
-    })
+    // it('should get BCH data on an address', async () => {
+    //   // Mock external dependencies.
+    //   sandbox
+    //     .stub(uut.bchjs.Blockbook, 'balance')
+    //     .resolves(mockData.mockBalance)
+    //   sandbox.stub(uut.bchjs.Blockbook, 'utxo').resolves(mockData.mockUtxos)
+    //
+    //   const addr = 'bitcoincash:qp3sn6vlwz28ntmf3wmyra7jqttfx7z6zgtkygjhc7'
+    //
+    //   const bchData = await uut.getBchData(addr)
+    //
+    //   // Assert that top-level properties exist.
+    //   assert.property(bchData, 'balance')
+    //   assert.property(bchData, 'utxos')
+    //
+    //   // Assert essential UTXOs properties exist.
+    //   assert.isArray(bchData.utxos)
+    //   assert.property(bchData.utxos[0], 'txid')
+    //   assert.property(bchData.utxos[0], 'vout')
+    //   assert.property(bchData.utxos[0], 'satoshis')
+    // })
   })
 })

@@ -33,7 +33,7 @@
   },
   "repository": "Permissionless-Software-Foundation/psf-metrics",
   "dependencies": {
-    "@psf/bch-js": "^3.10.1",
+    "@psf/bch-js": "^4.7.2",
     "apidoc": "^0.23.0",
     "bch-util": "^1.2.2",
     "bitcoinfiles-node": "^0.5.4"
@@ -50,7 +50,7 @@
     "husky": "^4.3.0",
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
-    "semantic-release": "^17.0.0",
+    "semantic-release": "^17.3.7",
     "sinon": "^9.0.2",
     "standard": "^14.3.1"
   },
