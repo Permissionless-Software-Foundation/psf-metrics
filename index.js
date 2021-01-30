@@ -20,6 +20,20 @@ class BoilplateLib {
     _this.bchjs = new BCHJS()
     _this.metrics = new Metrics()
   }
+
+  // Generate a CSV output from an array of objects (data). An optional header
+  // string can be provided.
+  generateCSV (data) {
+    // let outStr = header
+    let outStr = 'Date,Height,TokenQty,TXID,Vout\n'
+
+    for (let i = 0; i < data.length; i++) {
+      const thisData = data[i]
+      outStr += `${thisData.date},${thisData.height},${thisData.amount},${thisData.txid},${thisData.vout}\n`
+    }
+
+    return outStr
+  }
 }
 
 async function runReport () {
@@ -28,15 +42,33 @@ async function runReport () {
 
     const Dec1stBlock = 664000
     const Dec31stBlock = 668300
-
     const inflows = await lib.metrics.tokenInflows(Dec1stBlock, Dec31stBlock)
-    console.log(
-      `Token inflows between blocks ${Dec1stBlock} and ${Dec31stBlock}:\n${JSON.stringify(
-        inflows,
-        null,
-        2
-      )}`
-    )
+    const csv = lib.generateCSV(inflows)
+    console.log(csv)
+
+    // console.log(
+    //   `Token inflows between blocks ${Oct1stBlock} and ${Oct30thBlock}:\n${JSON.stringify(
+    //     inflows,
+    //     null,
+    //     2
+    //   )}`
+    // )
+
+    // const Nov1stBlock = 659634
+    // const Nov30thBlock = 668300
+    // const inflows = await lib.metrics.tokenInflows(Nov1stBlock, Nov30thBlock)
+
+    // const Oct1stBlock = 655220
+    // const Oct30thBlock = 659634
+    // const inflows = await lib.metrics.tokenInflows(Oct1stBlock, Oct30thBlock)
+    //
+    // console.log(
+    //   `Token inflows between blocks ${Oct1stBlock} and ${Oct30thBlock}:\n${JSON.stringify(
+    //     inflows,
+    //     null,
+    //     2
+    //   )}`
+    // )
   } catch (err) {
     console.error('Error in runReport(): ', err)
   }
