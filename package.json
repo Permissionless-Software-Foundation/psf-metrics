@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "TEST=unit nyc mocha test/unit/",
     "test:integration": "mocha --timeout 25000 test/integration/",
-    "test:temp": "mocha --timeout 25000 test/integration/metrics-integration.js",
+    "test:temp": "mocha --timeout 60000 test/integration/metrics-integration.js",
     "lint": "standard --env mocha --fix",
     "docs": "./node_modules/.bin/apidoc -i src/ -o docs",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -34,7 +34,7 @@
   },
   "repository": "Permissionless-Software-Foundation/psf-metrics",
   "dependencies": {
-    "@psf/bch-js": "^4.7.2",
+    "@psf/bch-js": "^4.8.0",
     "apidoc": "^0.23.0",
     "bch-util": "^1.2.2",
     "bitcoinfiles-node": "^0.5.4"

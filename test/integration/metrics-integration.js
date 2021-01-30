@@ -15,7 +15,7 @@ describe('#metrics', () => {
       const Dec1stBlock = 664000
       const Dec31stBlock = 668300
 
-      await uut.tokenLiquidityBurn(Dec1stBlock, Dec31stBlock)
+      await uut.tokenInflows(Dec1stBlock, Dec31stBlock)
     })
   })
 })
