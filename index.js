@@ -42,8 +42,17 @@ async function runReport () {
 
     const Dec1stBlock = 664000
     const Dec31stBlock = 668300
-    const inflows = await lib.metrics.tokenInflows(Dec1stBlock, Dec31stBlock)
-    const csv = lib.generateCSV(inflows)
+    // const inflows = await lib.metrics.tokenInflows(Dec1stBlock, Dec31stBlock)
+    // const csv = lib.generateCSV(inflows)
+    // console.log(csv)
+
+    // const outflows = await lib.metrics.tokenOutflows(Dec1stBlock, Dec31stBlock)
+    // const csv = lib.generateCSV(outflows)
+    // console.log(csv)
+
+    // await lib.metrics.tokenBurns(672210, 672215)
+    const burns = await lib.metrics.tokenBurns(Dec1stBlock, Dec31stBlock)
+    const csv = lib.generateCSV(burns)
     console.log(csv)
 
     // console.log(
