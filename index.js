@@ -42,8 +42,8 @@ async function runReport () {
   try {
     const lib = new BoilplateLib()
 
-    const startBlock = 659650
-    const stopBlock = 664000
+    const startBlock = 668375
+    const stopBlock = 672758
 
     // const inflows = await lib.metrics.tokenInflows(startBlock, stopBlock)
     // const csv = lib.generateCSV(inflows)
