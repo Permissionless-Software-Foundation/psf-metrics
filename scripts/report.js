@@ -42,20 +42,20 @@ async function runReport () {
   try {
     const lib = new BoilplateLib()
 
-    const startBlock = 668375
-    const stopBlock = 672758
+    const startBlock = 672758
+    const stopBlock = 676830
 
     // const inflows = await lib.metrics.tokenInflows(startBlock, stopBlock)
     // const csv = lib.generateCSV(inflows)
     // console.log(csv)
 
-    // const outflows = await lib.metrics.tokenOutflows(startBlock, stopBlock)
-    // const csv = lib.generateCSV(outflows)
-    // console.log(csv)
-
-    const burns = await lib.metrics.tokenBurns(startBlock, stopBlock)
-    const csv = lib.generateCSV(burns)
+    const outflows = await lib.metrics.tokenOutflows(startBlock, stopBlock)
+    const csv = lib.generateCSV(outflows)
     console.log(csv)
+
+    // const burns = await lib.metrics.tokenBurns(startBlock, stopBlock)
+    // const csv = lib.generateCSV(burns)
+    // console.log(csv)
   } catch (err) {
     console.error('Error in runReport(): ', err)
   }
