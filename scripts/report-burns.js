@@ -1,7 +1,6 @@
 /*
-  4/16/21 CT
-  This file is DEPRECATED. It's been split up to create the other three report
-  scripts. This file should not be used and should be deleted after 6/15/21.
+  Generates a CSV file for token BURNS between the startBlock and endBlock
+  defined in the config/index.js file.
 */
 
 /* eslint-disable no-async-promise-executor */
@@ -11,6 +10,7 @@
 const BCHJS = require('@psf/bch-js')
 
 const Metrics = require('../lib/metrics')
+const config = require('../config')
 
 let _this // local global for 'this'.
 
@@ -26,7 +26,7 @@ class BoilplateLib {
   // string can be provided.
   generateCSV (data) {
     // let outStr = header
-    let outStr = 'Date,Height,TokenQty,TXID,Vout\n'
+    let outStr = '\n\nBurns:\nDate,Height,TokenQty,TXID,Vout\n'
 
     for (let i = 0; i < data.length; i++) {
       const thisData = data[i]
@@ -39,24 +39,18 @@ class BoilplateLib {
   }
 }
 
+// This is the main function that starts off the program.
+// It generates a CSV report on token inflows.
 async function runReport () {
   try {
     const lib = new BoilplateLib()
 
-    const startBlock = 672758
-    const stopBlock = 676830
+    const startBlock = config.startBlock
+    const stopBlock = config.endBlock
 
-    const inflows = await lib.metrics.tokenInflows(startBlock, stopBlock)
-    const csv = lib.generateCSV(inflows)
+    const burns = await lib.metrics.tokenBurns(startBlock, stopBlock)
+    const csv = lib.generateCSV(burns)
     console.log(csv)
-
-    // const outflows = await lib.metrics.tokenOutflows(startBlock, stopBlock)
-    // const csv = lib.generateCSV(outflows)
-    // console.log(csv)
-
-    // const burns = await lib.metrics.tokenBurns(startBlock, stopBlock)
-    // const csv = lib.generateCSV(burns)
-    // console.log(csv)
   } catch (err) {
     console.error('Error in runReport(): ', err)
   }
