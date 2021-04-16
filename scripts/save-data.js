@@ -13,6 +13,8 @@ const msgLib = new MsgLib({ bchjs })
 
 const axios = require('axios')
 
+const TOKENID = '38e97c5d7d3585a2cbf3f9580c82ca33985f9cb0845d4dcce220cb709f9538b0'
+
 async function startProgram () {
   try {
     // Write the price data to the chain once every 24 hours.
@@ -43,8 +45,13 @@ async function writeDataToChain () {
     const now = new Date()
     priceData.time = now.toISOString()
 
+    const tokenStats = await bchjs.SLP.Utils.tokenStats(TOKENID)
+    // console.log(`tokenStats: ${JSON.stringify(tokenStats, null, 2)}`)
+    priceData.circulatingSupply = tokenStats.circulatingSupply
+
     // Convert the object to a string.
     const dataStr = JSON.stringify(priceData, null, 2)
+    // console.log('dataStr: ', dataStr)
 
     // Generate a BCH transaction using the Memo.cash protocol.
     const hex = await msgLib.memo.memoPush(dataStr, wallet.WIF)
