@@ -9,6 +9,6 @@
 */
 
 module.exports = {
-  startBlock: 681200,
-  endBlock: 685850
+  startBlock: 659650,
+  endBlock: 664000
 }
